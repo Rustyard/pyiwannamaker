@@ -1,0 +1,1 @@
+print('pyiwannamaker version 0.0.1-alpha imported successfully')

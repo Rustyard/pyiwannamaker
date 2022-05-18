@@ -1,0 +1,3 @@
+*.map
+.vscode/
+__pycache__/
