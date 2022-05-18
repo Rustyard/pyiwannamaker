@@ -105,13 +105,14 @@ class Level:
             object.dump(objects_element)
 
     def add_object(self, object: Object) -> None:
-        """Add an object to the level.
+        """Add an object to the level. The object must be inbound or it will not be added.
 
         Args:
             object (Object): The object to add.
         """
-        self.objects.append(object)
-        self.head['num_objects'] += 1
+        if self.is_object_inbound(object):
+            self.objects.append(object)
+            self.head['num_objects'] += 1
 
     def remove_object(self, object: Object) -> bool:
         """Remove an object from the level.
@@ -129,6 +130,21 @@ class Level:
         else:
             return False
 
+    def is_object_inbound(self, object: Object) -> bool:
+        """Check if the object is inbound to the level.
+
+        Args:
+            object (Object): The object to check.
+
+        Returns:
+            bool: True if the object is inbound, False otherwise.
+        """
+        if object.x >= 0 and object.x <= self.head['width'] and object.y >= 0 and object.y <= self.head['height']:
+            return True
+        else:
+            return False
+
+    # getters and setters for the level info
     def get_level_name(self) -> str:
         """Get the level's name.
 
@@ -352,5 +368,3 @@ class Level:
             level_objects (list): The new level objects.
         """
         self.objects = level_objects
-
-    
