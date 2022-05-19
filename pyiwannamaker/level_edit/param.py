@@ -1,16 +1,19 @@
+from typing import Union
 import xml.etree.ElementTree as etree
 from xml.etree.ElementTree import Element, SubElement, ElementTree
 
 class Param:
     """Parameter for object and events, must have a unique key and a value."""
-    def __init__(self, key: str, val: int) -> None:
+    def __init__(self, key: str, val: Union[str, int, float]) -> None:
         """Initialize a parameter with a key and a value.
 
         Args:
             key (str): The key of the parameter.
-            val (int): The value of the parameter.
+            val (Union[str, int, float]): The value of the parameter.
         """
         self.key = key
+        if isinstance(val, int) or isinstance(val, float):
+            val = str(val)
         self.val = val
     
     def dump(self, parent: Element) -> None:
@@ -21,17 +24,19 @@ class Param:
         """
         param = SubElement(parent, 'param')
         param.set('key', self.key)
-        param.set('val', str(self.val))
+        param.set('val', self.val)
 
-    def set_val(self, val: int) -> None:
+    def set_val(self, val: Union[str, int, float]) -> None:
         """Set the value of the parameter.
         
         Args:
-            val (int): The new value of the parameter.
+            val (Union[str, int, float]): The new value of the parameter.
         """
+        if isinstance(val, int) or isinstance(val, float):
+            val = str(val)
         self.val = val
 
-    def get_val(self) -> int:
+    def get_val(self) -> str:
         """Get the value of the parameter."""
         return self.val
 

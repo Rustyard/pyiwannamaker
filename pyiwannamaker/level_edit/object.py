@@ -2,22 +2,30 @@ import xml.etree.ElementTree as etree
 from xml.etree.ElementTree import Element, SubElement, ElementTree
 from .param import Param
 from .onevent import OnEvent
+from typing import Union
 
 class Object:
     """Base class for in-game objects."""
-    def __init__(self, type: int, x: int=0, y: int=0) -> None:
+    def __init__(self, type: int, x: int=0, y: int=0, scale: float=1) -> None:
         """Initialize an object with a type and position.
 
         Args:
             type (int): The type of the object.
             x (int, optional): The x position of the object. Defaults to 0.
             y (int, optional): The y position of the object. Defaults to 0.
+            scale (float, optional): The scale of the object. Ranged from 0.2 to 15. Defaults to 1.
         """
         self.type = type
         self.x = int(x)
         self.y = int(y)
+
+        if scale < 0.2:
+            scale = 0.2
+        if scale > 15:
+            scale = 15
+        
         self.params = [
-            Param('scale', '1')
+            Param('scale', scale)
         ]
         self.events = []
     
@@ -45,12 +53,12 @@ class Object:
         """
         self.params.append(param)
 
-    def change_param(self, key: str, value: float) -> bool:
+    def change_param(self, key: str, value: Union[str, int, float]) -> bool:
         """Change the value of a parameter.
 
         Args:
             key (str): The key of the parameter to change.
-            value (float): The new value.
+            value (Union[str, int, float]): The new value.
 
         Returns:
             bool: True if the parameter was changed, False otherwise.
@@ -99,13 +107,13 @@ class Object:
         else:
             return False
 
-    def adjust_event(self, event: OnEvent, key: str, val: int) -> bool:
+    def adjust_event(self, event: OnEvent, key: str, val: Union[str, int, float]) -> bool:
         """Adjust a parameter of an event.
 
         Args:
             event (OnEvent): The event to adjust.
             key (str): The key of the parameter to adjust.
-            val (int): The new value.
+            val (Union[str, int, float]): The new value.
 
         Returns:
             bool: True if the event was adjusted, False otherwise.

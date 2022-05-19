@@ -7,15 +7,21 @@ from .onevent import OnEvent
 from .constants import *
 
 class Spike(Object):
+    """The spike object.
+    """
     def __init__(self, x: int = 0, y: int = 0, angle: int = 90, scale: float = 1, tileset: int = 0) -> None:
-        super().__init__(OBJECT_TYPE_SPIKE, x, y)
+        """Initialize a spike object.
+
+        Args:
+            x (int, optional): The x position of the spike. Defaults to 0.
+            y (int, optional): The y position of the spike. Defaults to 0.
+            angle (int, optional): The angle of the spike, it can be 0(facing right), 90(facing up), 180(facing left), 270(facing down). Defaults to 90.
+            scale (float, optional): The scale of the spike. Ranged from 0.2 to 15. Defaults to 1.
+            tileset (int, optional): The tileset of the spike, can be 0 or 1. Defaults to 0.
+        """
+        super().__init__(OBJECT_TYPE_SPIKE, x, y, scale=scale)
         self.sprite_angle = angle
         self.params.append(Param('spike_index', tileset))
-        if scale < 0.2:
-            scale = 0.2
-        if scale > 15:
-            scale = 15
-        self.change_param('scale', scale)
 
     def dump(self, parent: Element) -> None:
         obj = super().dump(parent)
@@ -33,10 +39,6 @@ class Block(Object):
             scale (float, optional): The scale of the block. Ranged from 0.2 to 15. Defaults to 1.
             tileset (int, optional): The tileset value of the block, it's either 0 or 1. Defaults to 0.
         """
-        super().__init__(OBJECT_TYPE_BLOCK, x, y)
+        super().__init__(OBJECT_TYPE_BLOCK, x, y, scale=scale)
         self.params.append(Param('tileset', tileset))
-        if scale < 0.2:
-            scale = 0.2
-        if scale > 15:
-            scale = 15
-        self.change_param('scale', scale)
+        
