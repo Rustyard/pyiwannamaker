@@ -114,6 +114,16 @@ class Level:
             self.objects.append(object)
             self.head['num_objects'] += 1
 
+    def add_objects(self, objects: list[Object]) -> None:
+        """Add multiple objects to the level.
+
+        Args:
+            objects (list[Object]): The objects to add.
+        """
+        for object in objects:
+            if isinstance(object, Object):
+                self.add_object(object)
+
     def remove_object(self, object: Object) -> bool:
         """Remove an object from the level.
 
@@ -368,3 +378,13 @@ class Level:
             level_objects (list): The new level objects.
         """
         self.objects = level_objects
+
+    def __str__(self) -> str:
+        """Get the string representation of the level.
+
+        Returns:
+            str: The string representation of the level.
+        """
+        return 'Level name: ' + self.head['name'] + '\n'\
+            + 'Level head info: ' + str(self.head) + '\n'\
+            + 'Objects: ' + str([str(obj) for obj in self.objects])

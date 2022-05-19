@@ -8,7 +8,7 @@ def main():
     level = Level('A brick')
     block = Object(OBJECT_TYPE_BLOCK, 1, 1)
     level.add_object(block)
-    level.dump_to_file()
+    print(level)
     # level = Level.load_from_file('test.xml')
 
 
