@@ -21,7 +21,7 @@ class Param:
         """
         param = SubElement(parent, 'param')
         param.set('key', self.key)
-        param.set('val', self.val)
+        param.set('val', str(self.val))
 
     def set_val(self, val: int) -> None:
         """Set the value of the parameter.

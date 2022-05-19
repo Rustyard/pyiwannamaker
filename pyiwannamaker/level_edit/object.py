@@ -14,14 +14,14 @@ class Object:
             y (int, optional): The y position of the object. Defaults to 0.
         """
         self.type = type
-        self.x = x
-        self.y = y
+        self.x = int(x)
+        self.y = int(y)
         self.params = [
             Param('scale', '1')
         ]
         self.events = []
     
-    def dump(self, parent: Element) -> None:
+    def dump(self, parent: Element) -> Element:
         """Dump the object to a xml element that belongs to the parent element(usually the level).
 
         Args:
@@ -35,6 +35,7 @@ class Object:
             param.dump(obj)
         for event in self.events:
             event.dump(obj)
+        return obj
 
     def add_param(self, param: Param) -> None:
         """Add a parameter to the object.
@@ -44,50 +45,19 @@ class Object:
         """
         self.params.append(param)
 
-    def change_param(self, param: Param, value: int) -> bool:
-        """Change the value of a parameter.
-
-        Args:
-            param (Param): The parameter to change.
-            value (int): The new value.
-
-        Returns:
-            bool: True if the parameter was changed, False otherwise.
-        """
-        for p in self.params:
-            if p.key == param.key:
-                p.value = value
-                return True
-        return False
-
-    def change_param(self, param: Param) -> bool:
-        """Change the value of a parameter.
-
-        Args:
-            param (Param): The parameter to change.
-
-        Returns:
-            bool: True if the parameter was changed, False otherwise.
-        """
-        for p in self.params:
-            if p.key == param.key:
-                p.value = param.value
-                return True
-        return False
-
-    def change_param(self, key: str, value: int) -> bool:
+    def change_param(self, key: str, value: float) -> bool:
         """Change the value of a parameter.
 
         Args:
             key (str): The key of the parameter to change.
-            value (int): The new value.
+            value (float): The new value.
 
         Returns:
             bool: True if the parameter was changed, False otherwise.
         """
         for param in self.params:
-            if param.key == key:
-                param.value = value
+            if param.get_key() == key:
+                param.set_val(value)
                 return True
         return False
 

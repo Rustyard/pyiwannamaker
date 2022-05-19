@@ -43,11 +43,11 @@ class Level:
         """
         print("This method is not viable yet.")
 
-    def dump_to_file(self, file_path: str='') -> None:
+    def dump_to_file(self, file_path: str) -> None:
         """Dump the level to a map file.
 
         Args:
-            file_path (str, optional): Path to save the map file. Defaults to ''.
+            file_path (str): Path to save the map file.
             If no path is given, the level name + '.map' will be used.
         """
         root = Element('sfm_map')
@@ -56,7 +56,7 @@ class Level:
         objects = SubElement(root, 'objects')
         self.dump_objects(objects)
         tree = ElementTree(root)
-        if file_path:
+        if file_path and len(file_path) > 0:
             tree.write(file_path)
         else:
             tree.write(self.head['name']+'.map')
@@ -153,6 +153,24 @@ class Level:
             return True
         else:
             return False
+
+    def set_size(self, width: int, height: int) -> None:
+        """Set the level's size.
+
+        Args:
+            width (int): The new width.
+            height (int): The new height.
+        """
+        self.head['width'] = width
+        self.head['height'] = height
+
+    def get_size(self) -> tuple[int, int]:
+        """Get the level's size.
+
+        Returns:
+            tuple[int, int]: The level's size.
+        """
+        return self.head['width'], self.head['height']
 
     # getters and setters for the level info
     def get_level_name(self) -> str:
