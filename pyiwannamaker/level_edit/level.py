@@ -154,6 +154,20 @@ class Level:
         else:
             return False
 
+    def find_objects_at_position(self, x: int, y: int) -> list[Object]:
+        """Find all objects at the given position.
+
+        Args:
+            x (int): The x position.
+            y (int): The y position.
+        """
+        objects = []
+        for object in self.objects:
+            if object.x == x and object.y == y:
+                objects.append(object)
+        return objects
+
+
     def set_size(self, width: int, height: int) -> None:
         """Set the level's size.
 
