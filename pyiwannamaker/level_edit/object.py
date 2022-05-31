@@ -53,6 +53,28 @@ class Object:
         """
         self.params.append(param)
 
+    def get_params(self) -> list:
+        """Get the parameters of the object.
+        
+        Returns:
+            list: The parameters of the object.
+        """
+        return self.params
+
+    def get_param(self, key: str) -> str:
+        """Get the value of a parameter.
+        
+        Args:
+            key (str): The key of the parameter.
+        
+        Returns:
+            str: The value of the parameter.
+        """
+        for param in self.params:
+            if param.get_key() == key:
+                return param.get_val()
+        return None
+
     def change_param(self, key: str, value: Union[str, int, float]) -> bool:
         """Change the value of a parameter.
 

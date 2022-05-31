@@ -43,7 +43,7 @@ class Level:
         """
         print("This method is not viable yet.")
 
-    def dump_to_file(self, file_path: str) -> None:
+    def dump_to_file(self, file_path: str = '') -> None:
         """Dump the level to a map file.
 
         Args:
@@ -56,7 +56,7 @@ class Level:
         objects = SubElement(root, 'objects')
         self.dump_objects(objects)
         tree = ElementTree(root)
-        if file_path and len(file_path) > 0:
+        if len(file_path) > 0 and file_path:
             tree.write(file_path)
         else:
             tree.write(self.head['name']+'.map')
